@@ -1,0 +1,70 @@
+import { auth } from '@/lib/auth'
+import { NextRequest, NextResponse } from 'next/server'
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Allow auth and debug endpoints to bypass middleware
+  if (pathname.startsWith('/api/auth') || pathname.startsWith('/api/debug')) {
+    return NextResponse.next()
+  }
+
+  // Allow public routes to bypass middleware
+  const publicRoutes = ['/login', '/register', '/about'] // add any public routes here
+  if (publicRoutes.some((route) => pathname.startsWith(route))) {
+    return NextResponse.next()
+  }
+
+  // Get session
+  const session = await auth()
+
+  // If user is not authenticated, redirect to login for protected routes
+  const protectedRoutes = ['/admin', '/doctor', '/receptionist', '/patient', '/api']
+  if (!session && protectedRoutes.some((route) => pathname.startsWith(route))) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  // Role-based access
+  if (session) {
+    const role = session.user?.role as string
+
+    // Redirect root '/' to user dashboard
+    if (pathname === '/') {
+      switch (role) {
+        case 'ADMIN':
+          return NextResponse.redirect(new URL('/admin', request.url))
+        case 'DOCTOR':
+          return NextResponse.redirect(new URL('/doctor', request.url))
+        case 'RECEPTIONIST':
+          return NextResponse.redirect(new URL('/receptionist', request.url))
+        case 'PATIENT':
+          return NextResponse.redirect(new URL('/patient', request.url))
+        default:
+          return NextResponse.redirect(new URL('/login', request.url))
+      }
+    }
+
+    // Block access to unauthorized dashboards
+    if (
+      (pathname.startsWith('/admin') && role !== 'ADMIN') ||
+      (pathname.startsWith('/doctor') && role !== 'DOCTOR') ||
+      (pathname.startsWith('/receptionist') && role !== 'RECEPTIONIST') ||
+      (pathname.startsWith('/patient') && role !== 'PATIENT')
+    ) {
+      return NextResponse.redirect(new URL('/', request.url))
+    }
+  }
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: [
+    '/admin/:path*',
+    '/doctor/:path*',
+    '/receptionist/:path*',
+    '/patient/:path*',
+    '/api/:path*',
+    '/',
+  ],
+}
