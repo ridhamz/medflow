@@ -225,4 +225,3 @@ Représente un service médical offert par la clinique.
 6. **Consultation ↔ Prescription**: Relation one-to-many (une consultation peut avoir plusieurs prescriptions)
 7. **Patient ↔ Invoice**: Relation one-to-many (un patient peut avoir plusieurs factures)
 8. **Clinic ↔ Service**: Relation one-to-many (une clinique peut avoir plusieurs services)
-

@@ -2,7 +2,7 @@
 
 Ce document contient les diagrammes de cas d'utilisation et de classes pour l'application MedFlow.
 
-## 📋 Table des Matières
+## Table des Matières
 
 1. [Use Case Diagram](#use-case-diagram)
 2. [Class Diagram](#class-diagram)
@@ -15,11 +15,11 @@ Le diagramme de cas d'utilisation montre les interactions entre les différents 
 
 ### Acteurs
 
-- **👨‍💼 Admin**: Gestionnaire de la clinique
-- **👨‍⚕️ Médecin**: Professionnel de santé
-- **👩‍💼 Réceptionniste**: Personnel administratif
-- **🤖 Patient**: Utilisateur final
-- **⚙️ Système**: Processus automatiques
+- **Admin**: Gestionnaire de la clinique
+- **Médecin**: Professionnel de santé
+- **Réceptionniste**: Personnel administratif
+- **Patient**: Utilisateur final
+- **Système**: Processus automatiques
 
 ### Vue d'ensemble
 
@@ -65,7 +65,7 @@ Voir le [diagramme complet](./class-diagram.md) pour tous les détails.
 
 ---
 
-## 📊 Visualisation
+## Visualisation
 
 Pour visualiser ces diagrammes :
 
@@ -75,11 +75,10 @@ Pour visualiser ces diagrammes :
 
 ---
 
-## 🔄 Mise à jour
+## Mise à jour
 
 Ces diagrammes doivent être mis à jour lorsque :
 - De nouvelles fonctionnalités sont ajoutées
 - De nouvelles entités sont créées
 - Les relations entre entités changent
 - De nouveaux rôles sont introduits
-

@@ -5,11 +5,11 @@
 ```mermaid
 graph TB
     %% Acteurs
-    Admin[👨‍💼 Admin]
-    Doctor[👨‍⚕️ Médecin]
-    Receptionist[👩‍💼 Réceptionniste]
-    Patient[🤖 Patient]
-    System[⚙️ Système]
+    Admin[Admin]
+    Doctor[Médecin]
+    Receptionist[Réceptionniste]
+    Patient[Patient]
+    System[Système]
 
     %% Cas d'utilisation Admin
     Admin --> UC1[Gérer les Patients]
@@ -58,17 +58,11 @@ graph TB
     UC11 -.-> UC29
     UC25 -.-> UC30
     UC12 -.-> UC31
-
-    style Admin fill:#3b82f6,color:#fff
-    style Doctor fill:#10b981,color:#fff
-    style Receptionist fill:#f59e0b,color:#fff
-    style Patient fill:#8b5cf6,color:#fff
-    style System fill:#6b7280,color:#fff
 ```
 
 ## Description des Cas d'Utilisation
 
-### 👨‍💼 Admin
+### Admin
 - **UC1**: Gérer les Patients - CRUD complet sur les patients
 - **UC2**: Gérer les Médecins - Ajouter, modifier, supprimer des médecins
 - **UC3**: Gérer le Staff - Gérer les réceptionnistes
@@ -78,7 +72,7 @@ graph TB
 - **UC7**: Gérer les Factures - Voir toutes les factures
 - **UC8**: Configurer la Clinique - Modifier infos de la clinique
 
-### 👨‍⚕️ Médecin
+### Médecin
 - **UC9**: Voir Mon Agenda - Rendez-vous du médecin
 - **UC10**: Consulter Dossiers Patients - Accès aux dossiers médicaux
 - **UC11**: Créer Consultation - Après un rendez-vous
@@ -86,7 +80,7 @@ graph TB
 - **UC13**: Voir Mes Consultations - Historique des consultations
 - **UC14**: Voir Mes Prescriptions - Liste des ordonnances créées
 
-### 👩‍💼 Réceptionniste
+### Réceptionniste
 - **UC15**: Créer Rendez-vous - Planifier un rendez-vous
 - **UC16**: Modifier Rendez-vous - Changer date/heure/statut
 - **UC17**: Enregistrer Patient - Créer nouveau patient
@@ -95,7 +89,7 @@ graph TB
 - **UC20**: Voir Factures - Liste des factures
 - **UC6**: Gérer les Rendez-vous - Voir tous les rendez-vous
 
-### 🤖 Patient
+### Patient
 - **UC21**: Réserver Rendez-vous - Prendre rendez-vous en ligne
 - **UC22**: Modifier Rendez-vous - Changer date/heure
 - **UC23**: Annuler Rendez-vous - Annuler un rendez-vous
@@ -104,9 +98,8 @@ graph TB
 - **UC26**: Télécharger Ordonnance - Télécharger PDF
 - **UC27**: Voir Mes Prescriptions - Liste de ses ordonnances
 
-### ⚙️ Système
+### Système
 - **UC28**: Authentification - Login/Register avec NextAuth
 - **UC29**: Générer Facture Automatique - Après consultation
 - **UC30**: Traiter Paiement Stripe - Webhook Stripe
 - **UC31**: Générer PDF Ordonnance - Export PDF avec pdfkit
-
