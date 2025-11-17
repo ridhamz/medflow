@@ -26,9 +26,14 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET 
   })
 
+  // Allow root path to pass through - let the page component handle redirect
+  // This prevents redirect loops after login
+  if (pathname === '/') {
+    return NextResponse.next()
+  }
+
   // If user is not authenticated, redirect to login for protected routes
   const protectedRoutes = ['/admin', '/doctor', '/receptionist', '/patient']
-  // Don't protect /api routes in middleware - let API routes handle auth
   if (!token && protectedRoutes.some((route) => pathname.startsWith(route))) {
     const loginUrl = new URL('/login', request.url)
     loginUrl.searchParams.set('callbackUrl', pathname)
@@ -38,22 +43,6 @@ export async function middleware(request: NextRequest) {
   // Role-based access
   if (token) {
     const role = token.role as string
-
-    // Redirect root '/' to user dashboard
-    if (pathname === '/') {
-      switch (role) {
-        case 'ADMIN':
-          return NextResponse.redirect(new URL('/admin', request.url))
-        case 'DOCTOR':
-          return NextResponse.redirect(new URL('/doctor', request.url))
-        case 'RECEPTIONIST':
-          return NextResponse.redirect(new URL('/receptionist', request.url))
-        case 'PATIENT':
-          return NextResponse.redirect(new URL('/patient', request.url))
-        default:
-          return NextResponse.redirect(new URL('/login', request.url))
-      }
-    }
 
     // Block access to unauthorized dashboards
     if (
