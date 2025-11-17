@@ -82,7 +82,9 @@ function LoginForm() {
       }
 
       if (result?.ok) {
-        router.push(callbackUrl)
+        // Wait a bit for session to be set, then redirect
+        await new Promise(resolve => setTimeout(resolve, 100))
+        window.location.href = callbackUrl
         return
       }
     } catch (err) {

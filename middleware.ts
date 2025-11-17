@@ -15,6 +15,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  // Allow NextAuth callback to complete before checking token
+  if (pathname.startsWith('/api/auth/callback')) {
+    return NextResponse.next()
+  }
+
   // Get token (lightweight, no Prisma import)
   const token = await getToken({ 
     req: request,

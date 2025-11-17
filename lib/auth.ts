@@ -12,7 +12,7 @@ const authOptions = {
   pages: {
     signIn: "/login",
   },
- // basePath: "/api/auth",
+  // basePath: "/api/auth",
   providers: [
     Credentials({
       name: "Credentials",
