@@ -27,9 +27,12 @@ export async function middleware(request: NextRequest) {
   })
 
   // If user is not authenticated, redirect to login for protected routes
-  const protectedRoutes = ['/admin', '/doctor', '/receptionist', '/patient', '/api']
+  const protectedRoutes = ['/admin', '/doctor', '/receptionist', '/patient']
+  // Don't protect /api routes in middleware - let API routes handle auth
   if (!token && protectedRoutes.some((route) => pathname.startsWith(route))) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    const loginUrl = new URL('/login', request.url)
+    loginUrl.searchParams.set('callbackUrl', pathname)
+    return NextResponse.redirect(loginUrl)
   }
 
   // Role-based access
@@ -72,7 +75,6 @@ export const config = {
     '/doctor/:path*',
     '/receptionist/:path*',
     '/patient/:path*',
-    '/api/:path*',
     '/',
   ],
 }

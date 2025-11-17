@@ -72,27 +72,26 @@ function LoginForm() {
         email,
         password,
         redirect: false,
-        callbackUrl,
+        callbackUrl: callbackUrl,
       })
 
       if (result?.error) {
-        setError(result.error || 'Email ou mot de passe incorrect')
+        setError(result.error === 'CredentialsSignin' ? 'Email ou mot de passe incorrect' : result.error)
         setIsLoading(false)
         return
       }
 
       if (result?.ok) {
-        // Wait a bit for session to be set, then redirect
-        await new Promise(resolve => setTimeout(resolve, 100))
+        // Force a full page reload to ensure cookies are set
+        // This is more reliable than router.push in production
         window.location.href = callbackUrl
         return
       }
     } catch (err) {
       console.error('Login error:', err)
       setError('Une erreur est survenue')
+      setIsLoading(false)
     }
-    
-    setIsLoading(false)
   }
 
   return (

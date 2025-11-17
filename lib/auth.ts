@@ -13,6 +13,7 @@ const authOptions = {
     signIn: "/login",
   },
   // basePath: "/api/auth",
+  trustHost: true,
   providers: [
     Credentials({
       name: "Credentials",
@@ -88,7 +89,6 @@ const authOptions = {
       return session
     },
   },
-  trustHost: true,
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth(authOptions as any)
