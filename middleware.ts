@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth'
+import { getToken } from 'next-auth/jwt'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function middleware(request: NextRequest) {
@@ -15,18 +15,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Get session
-  const session = await auth()
+  // Get token (lightweight, no Prisma import)
+  const token = await getToken({ 
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET 
+  })
 
   // If user is not authenticated, redirect to login for protected routes
   const protectedRoutes = ['/admin', '/doctor', '/receptionist', '/patient', '/api']
-  if (!session && protectedRoutes.some((route) => pathname.startsWith(route))) {
+  if (!token && protectedRoutes.some((route) => pathname.startsWith(route))) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
   // Role-based access
-  if (session) {
-    const role = session.user?.role as string
+  if (token) {
+    const role = token.role as string
 
     // Redirect root '/' to user dashboard
     if (pathname === '/') {
