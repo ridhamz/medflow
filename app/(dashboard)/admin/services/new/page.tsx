@@ -14,7 +14,7 @@ const serviceSchema = z.object({
     (val) => !isNaN(parseFloat(val)) && parseFloat(val) > 0,
     'Le prix doit être un nombre positif'
   ),
-  isActive: z.boolean().default(true),
+  isActive: z.boolean(),
 })
 
 type ServiceInput = z.infer<typeof serviceSchema>
