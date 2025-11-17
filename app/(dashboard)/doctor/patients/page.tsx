@@ -49,10 +49,16 @@ export default function DoctorPatientsPage() {
         const appointments = appointmentsRes.ok ? await appointmentsRes.json() : []
         
         // Get unique patient IDs
-        const patientIds = [...new Set(appointments.map((apt: any) => apt.patientId))]
+        const patientIds: string[] = Array.from(
+          new Set(
+            appointments
+              .map((apt: any) => apt.patientId)
+              .filter((id): id is string => typeof id === 'string')
+          )
+        )
         
         // Fetch patient details
-        const patientPromises = patientIds.map((id: string) =>
+        const patientPromises = patientIds.map((id) =>
           fetch(`/api/patients/${id}`)
             .then(res => {
               if (!res.ok) {
